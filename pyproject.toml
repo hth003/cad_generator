@@ -1,0 +1,23 @@
+[project]
+name = "cad_generator"
+version = "0.1.0"
+description = "cad_generator using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.119.0,<1.0.0"
+]
+
+[project.scripts]
+cad_generator = "cad_generator.main:run"
+run_crew = "cad_generator.main:run"
+train = "cad_generator.main:train"
+replay = "cad_generator.main:replay"
+test = "cad_generator.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

@@ -1,0 +1,15 @@
+cad_design_task:
+  description: >
+    Interpret the user's prompt describing a CAD design into engineering specifications.
+    Identify geometry, dimensions, and constraints clearly.
+  expected_output: >
+    A detailed engineering specification for the CAD design.
+  agent: cad_system_designer
+
+scripting_task:
+  description: >
+    Convert the engineering specification into OpenSCAD code.
+    Make sure the code is efficient and easy to understand.
+  expected_output: >
+    A fully fledged OpenSCAD script that can be used to generate the CAD design.
+  agent: openscad_code_engineer
