@@ -5,6 +5,9 @@ from typing import List
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+from crewai_tools import CodeDocsSearchTool
+
+reference_tool = CodeDocsSearchTool(docs_url='https://www.openscad.org/documentation.html')
 
 @CrewBase
 class CadGenerator():
@@ -12,6 +15,7 @@ class CadGenerator():
 
     agents: List[BaseAgent]
     tasks: List[Task]
+    
 
     # Learn more about YAML configuration files here:
     # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
@@ -45,7 +49,8 @@ class CadGenerator():
     @task
     def openscad_scripting_task(self) -> Task:
         return Task(
-            config=self.tasks_config['openscad_scripting_task'], # type: ignore[index]
+            config=self.tasks_config['openscad_scripting_task'],
+            tools=[reference_tool], # type: ignore[index]
             output_file='openscad_script.scad'
         )
 

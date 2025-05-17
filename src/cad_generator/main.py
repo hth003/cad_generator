@@ -18,8 +18,7 @@ def run():
     Run the crew.
     """
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        'user_prompt': 'A gear with 12 teeth and a central hub',
     }
     
     try:
@@ -33,8 +32,7 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "topic": "AI LLMs",
-        'current_year': str(datetime.now().year)
+        "user_prompt": "A simple 3D model of a cube",
     }
     try:
         CadGenerator().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
@@ -57,8 +55,7 @@ def test():
     Test the crew execution and returns the results.
     """
     inputs = {
-        "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
+        "user_prompt": "A simple 3D model of a cube",
     }
     
     try:
