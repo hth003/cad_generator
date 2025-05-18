@@ -6,7 +6,7 @@ from typing import List
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 from crewai_tools import CodeDocsSearchTool
-
+from cad_generator.tools.custom_tool import OpenSCADValidationTool
 reference_tool = CodeDocsSearchTool(docs_url='https://www.openscad.org/documentation.html')
 
 @CrewBase
@@ -51,6 +51,14 @@ class CadGenerator():
         return Task(
             config=self.tasks_config['openscad_scripting_task'],
             tools=[reference_tool], # type: ignore[index]
+            output_file='openscad_script.scad'
+        )
+
+    @task
+    def debug_openscad_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['debug_openscad_task'],
+            tools=[OpenSCADValidationTool()],
             output_file='openscad_script.scad'
         )
 

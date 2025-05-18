@@ -18,7 +18,7 @@ def run():
     Run the crew.
     """
     inputs = {
-        'user_prompt': 'A gear with 12 teeth and a central hub',
+        'user_prompt': 'A gear with 12 teeth',
     }
     
     try:

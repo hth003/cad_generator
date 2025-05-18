@@ -10,9 +10,28 @@ cad_design_task:
 
 openscad_scripting_task:
   description: >
-    Convert the engineering specification into OpenSCAD code.
-    Make sure the code is efficient and easy to understand.
+    Using the CAD specification, generate a valid OpenSCAD script.
+    Use only OpenSCAD functions. Do not include pseudocode or non-existent functions.
+    The script must be directly usable in OpenSCAD without modification.
+    You must follow these rules:
+    - NEVER use "module" as a variable or parameter name — it is a reserved keyword in OpenSCAD.
+    - All variable assignments must happen at the top of the module, before any geometry.
+    - Test expressions for divisions and nested rotations.
+    - DO NOT include markdown formatting (like ```) or backticks.
   expected_output: >
-    A fully fledged OpenSCAD script that can be used to generate the CAD design.
-    DO NOT include markdown formatting or backticks.
+    A clean, error-free OpenSCAD script using correct syntax.
+    The code must be directly copy-pasteable and should compile in OpenSCAD.
+  agent: openscad_code_engineer
+
+
+debug_openscad_task:
+  description: >
+    Review the OpenSCAD script provided and the result of its compilation.
+    If the validator confirms it is valid, simply return the same script.
+    If the validator reports syntax errors, analyze the error message and regenerate a corrected version of the script.
+    Ensure your output is clean, with correct OpenSCAD syntax, and does not include markdown formatting or backticks.
+
+  expected_output: >
+    A fully corrected OpenSCAD script that compiles without syntax errors.
+    Only output the code — no extra explanation.
   agent: openscad_code_engineer
