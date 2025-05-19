@@ -1,23 +1,24 @@
 cad_design_task:
   description: >
     Interpret the user's prompt describing a CAD design into engineering specifications.
-    User prompt: {user_prompt}
+    User prompt: {user_prompt}.
     Identify geometry, dimensions, and constraints. 
-    List the basic steps to create the design in a CAD software.
   expected_output: >
     A detailed engineering specification for the CAD design.
   agent: cad_system_designer
 
 openscad_scripting_task:
   description: >
+    NEVER use “module” as a parameter or variable name. OpenSCAD will break.
     Using the CAD specification, generate a valid OpenSCAD script.
     Use only OpenSCAD functions. Do not include pseudocode or non-existent functions.
     The script must be directly usable in OpenSCAD without modification.
     You must follow these rules:
-    - NEVER use "module" as a variable or parameter name — it is a reserved keyword in OpenSCAD.
     - All variable assignments must happen at the top of the module, before any geometry.
     - Test expressions for divisions and nested rotations.
     - DO NOT include markdown formatting (like ```) or backticks.
+    ❌ Invalid: module gear(module=2) { ... }  // Will cause parser error
+    ✅ Correct: module gear(gear_module=2) { ... }
   expected_output: >
     A clean, error-free OpenSCAD script using correct syntax.
     The code must be directly copy-pasteable and should compile in OpenSCAD.

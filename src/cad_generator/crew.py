@@ -5,10 +5,11 @@ from typing import List
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
-from crewai_tools import CodeDocsSearchTool
+from crewai_tools import CodeDocsSearchTool, SerperDevTool, ScrapeWebsiteTool, WebsiteSearchTool
 from cad_generator.tools.custom_tool import OpenSCADValidationTool
-reference_tool = CodeDocsSearchTool(docs_url='https://www.openscad.org/documentation.html')
-
+documentation_tool = CodeDocsSearchTool(docs_url='https://www.openscad.org/documentation.html')
+library_tool = CodeDocsSearchTool(docs_url='https://www.openscad.org/libraries.html')
+code_ref_tool = WebsiteSearchTool(url='https://github.com/KitWallace/openscad')
 @CrewBase
 class CadGenerator():
     """CadGenerator crew"""
@@ -27,6 +28,7 @@ class CadGenerator():
     def cad_system_designer(self) -> Agent:
         return Agent(
             config=self.agents_config['cad_system_designer'], # type: ignore[index]
+            memory=False,
             verbose=True
         )
 
@@ -34,6 +36,7 @@ class CadGenerator():
     def openscad_code_engineer(self) -> Agent:
         return Agent(
             config=self.agents_config['openscad_code_engineer'], # type: ignore[index]
+            memory=False,
             verbose=True
         )
 
@@ -50,7 +53,7 @@ class CadGenerator():
     def openscad_scripting_task(self) -> Task:
         return Task(
             config=self.tasks_config['openscad_scripting_task'],
-            tools=[reference_tool], # type: ignore[index]
+            tools=[documentation_tool, library_tool, SerperDevTool(), ScrapeWebsiteTool(), code_ref_tool], # type: ignore[index]
             output_file='openscad_script.scad'
         )
 
