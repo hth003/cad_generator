@@ -5,11 +5,20 @@ from typing import List
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
-from crewai_tools import CodeDocsSearchTool, SerperDevTool, ScrapeWebsiteTool, WebsiteSearchTool
+from crewai_tools import PDFSearchTool, SerperDevTool, ScrapeWebsiteTool
+from crewai.knowledge.source.pdf_knowledge_source import PDFKnowledgeSource
+
+# Create a PDF knowledge source
+openscad_knowledge = PDFKnowledgeSource(
+    file_paths=["OpenSCAD_Tutorial.pdf", "OpenSCAD_Manual.pdf", "OpenSCAD_CheatSheet.pdf"]
+)
+
+# Initialize the tool and add content
+manual_search_tool = PDFSearchTool(pdf='knowledge/OpenSCAD_Manual.pdf')
+tutorial_search_tool = PDFSearchTool(pdf='knowledge/OpenSCAD_Tutorial.pdf')
+
 from cad_generator.tools.custom_tool import OpenSCADValidationTool
-documentation_tool = CodeDocsSearchTool(docs_url='https://www.openscad.org/documentation.html')
-library_tool = CodeDocsSearchTool(docs_url='https://www.openscad.org/libraries.html')
-code_ref_tool = WebsiteSearchTool(url='https://github.com/KitWallace/openscad')
+
 @CrewBase
 class CadGenerator():
     """CadGenerator crew"""
@@ -28,6 +37,7 @@ class CadGenerator():
     def cad_system_designer(self) -> Agent:
         return Agent(
             config=self.agents_config['cad_system_designer'], # type: ignore[index]
+            tools=[SerperDevTool()], # type: ignore[index]
             memory=False,
             verbose=True
         )
@@ -53,7 +63,7 @@ class CadGenerator():
     def openscad_scripting_task(self) -> Task:
         return Task(
             config=self.tasks_config['openscad_scripting_task'],
-            tools=[documentation_tool, library_tool, SerperDevTool(), ScrapeWebsiteTool(), code_ref_tool], # type: ignore[index]
+            tools=[SerperDevTool(), ScrapeWebsiteTool()], # type: ignore[index]
             output_file='openscad_script.scad'
         )
 
@@ -75,6 +85,7 @@ class CadGenerator():
             agents=self.agents, # Automatically created by the @agent decorator
             tasks=self.tasks, # Automatically created by the @task decorator
             process=Process.sequential,
+            knowledge_sources=[openscad_knowledge],
             verbose=True,
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )

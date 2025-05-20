@@ -18,9 +18,11 @@ def run():
     Run the crew.
     """
     inputs = {
-        'user_prompt': 'A rectangular tray',
+        'user_prompt': 'A rectangular block 80mm x 60mm x 10mm and a circular pocket 22mm in diameter in the middle for a bearing',
     }
-    
+    #A rectangular block 80mm x 60mm x 10mm , with counter-bored holes for M2 socket head cap screws at the corners, and a circular pocket 22mm in diameter in the middle for a bearing
+    #A cylinder, 10mm radius, 30mm height, with a dome top
+
     try:
         CadGenerator().crew().kickoff(inputs=inputs)
     except Exception as e:

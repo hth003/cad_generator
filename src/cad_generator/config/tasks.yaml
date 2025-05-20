@@ -9,16 +9,16 @@ cad_design_task:
 
 openscad_scripting_task:
   description: >
-    NEVER use “module” as a parameter or variable name. OpenSCAD will break.
-    Using the CAD specification, generate a valid OpenSCAD script.
-    Use only OpenSCAD functions. Do not include pseudocode or non-existent functions.
+    With the CAD specification, first, you must consult the provided documentation and cheatsheet
+    to find the relevant information and functions for the design.
+    Then, think about the strategy to design the object in OpenSCAD with everything you know.
+    Then, you must generate a valid OpenSCAD script using the correct functions.
+    Do not include pseudocode or non-existent functions.
     The script must be directly usable in OpenSCAD without modification.
     You must follow these rules:
     - All variable assignments must happen at the top of the module, before any geometry.
     - Test expressions for divisions and nested rotations.
     - DO NOT include markdown formatting (like ```) or backticks.
-    ❌ Invalid: module gear(module=2) { ... }  // Will cause parser error
-    ✅ Correct: module gear(gear_module=2) { ... }
   expected_output: >
     A clean, error-free OpenSCAD script using correct syntax.
     The code must be directly copy-pasteable and should compile in OpenSCAD.
