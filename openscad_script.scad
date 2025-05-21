@@ -1,24 +1,33 @@
-// Variable assignments
-length = 80;       // Length of the block in mm
-width = 60;        // Width of the block in mm
-height = 10;       // Height of the block in mm
-pocket_diameter = 22; // Diameter of the circular pocket in mm
-pocket_depth = height; // Depth of the pocket is equal to the height of the block
-pocket_radius = pocket_diameter / 2; // Radius of the pocket
+// LEGO Brick with 2 Cylindrical Studs
 
-// Module to create the rectangular block
-module rectangular_block() {
-    cube([length, width, height]);
+// Dimensions
+base_length = 31.8;
+base_width = 15.8;
+base_height = 9.6;
+stud_diameter = 4.8;
+stud_height = 2.5;
+stud_wall_thickness = 1.2;
+spacing_between_studs = 10.0;
+
+// Base
+module lego_brick() {
+    difference() {
+        // Main body
+        cube([base_length, base_width, base_height]);
+        
+        // Internal hollowing for wall thickness (top view)
+        translate([stud_diameter/2 + stud_wall_thickness, base_width/2, base_height])
+            cylinder(h = base_height + stud_height, d = stud_diameter);
+        translate([base_length - (stud_diameter/2 + stud_wall_thickness), base_width/2, base_height])
+            cylinder(h = base_height + stud_height, d = stud_diameter);
+    }
+    
+    // Adding studs
+    translate([base_length / 2 - spacing_between_studs / 2, base_width / 2, base_height])
+        cylinder(h = stud_height, d = stud_diameter);
+    translate([base_length / 2 + spacing_between_studs / 2, base_width / 2, base_height])
+        cylinder(h = stud_height, d = stud_diameter);
 }
 
-// Module to create the circular pocket
-module circular_pocket() {
-    translate([length / 2, width / 2, 0]) // Centering the pocket
-        cylinder(h = pocket_depth, r = pocket_radius, center = true);
-}
-
-// Final object assembly
-difference() {
-    rectangular_block(); // Create the block
-    circular_pocket();   // Create the pocket by subtracting from the block
-}
+// Render the LEGO Brick
+lego_brick();

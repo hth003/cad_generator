@@ -5,7 +5,11 @@ description = "cad_generator using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "crewai[tools]>=0.119.0,<1.0.0"
+    "crewai[tools]>=0.119.0,<1.0.0",
+    "numpy>=2.2.5",
+    "pyvista>=0.45.2",
+    "pyvistaqt>=0.9.0",
+    "PyQt6>=6.4.0",
 ]
 
 [project.scripts]
@@ -14,6 +18,7 @@ run_crew = "cad_generator.main:run"
 train = "cad_generator.main:train"
 replay = "cad_generator.main:replay"
 test = "cad_generator.main:test"
+gui = "cad_generator.main:gui"
 
 [build-system]
 requires = ["hatchling"]
