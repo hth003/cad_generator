@@ -63,7 +63,7 @@ class CadGenerator():
     def openscad_scripting_task(self) -> Task:
         return Task(
             config=self.tasks_config['openscad_scripting_task'],
-            tools=[SerperDevTool(), ScrapeWebsiteTool()], # type: ignore[index]
+            tools=[SerperDevTool(), ScrapeWebsiteTool(), manual_search_tool, tutorial_search_tool], # type: ignore[index]
             output_file='openscad_script.scad'
         )
 

@@ -1,33 +1,22 @@
-// LEGO Brick with 2 Cylindrical Studs
-
-// Dimensions
-base_length = 31.8;
-base_width = 15.8;
-base_height = 9.6;
-stud_diameter = 4.8;
-stud_height = 2.5;
-stud_wall_thickness = 1.2;
-spacing_between_studs = 10.0;
-
-// Base
-module lego_brick() {
-    difference() {
-        // Main body
-        cube([base_length, base_width, base_height]);
-        
-        // Internal hollowing for wall thickness (top view)
-        translate([stud_diameter/2 + stud_wall_thickness, base_width/2, base_height])
-            cylinder(h = base_height + stud_height, d = stud_diameter);
-        translate([base_length - (stud_diameter/2 + stud_wall_thickness), base_width/2, base_height])
-            cylinder(h = base_height + stud_height, d = stud_diameter);
-    }
+module cylinder_part() {
+    // Parameters
+    D = 50;                    // Outer Diameter in mm
+    H = 100;                   // Height in mm
+    wall_thickness = 2;        // Wall thickness in mm, 0 for solid
     
-    // Adding studs
-    translate([base_length / 2 - spacing_between_studs / 2, base_width / 2, base_height])
-        cylinder(h = stud_height, d = stud_diameter);
-    translate([base_length / 2 + spacing_between_studs / 2, base_width / 2, base_height])
-        cylinder(h = stud_height, d = stud_diameter);
+    // Derived values
+    inner_diameter = D - 2 * wall_thickness;
+    
+    // Check if hollow or solid
+    if (wall_thickness > 0 && inner_diameter > 0) {
+        difference() {
+            cylinder(h = H, d = D, center = false);
+            translate([0,0,0])  // Inner cylinder starts at bottom as well
+                cylinder(h = H, d = inner_diameter, center = false);
+        }
+    } else {
+        cylinder(h = H, d = D, center = false);
+    }
 }
 
-// Render the LEGO Brick
-lego_brick();
+cylinder_part();
