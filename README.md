@@ -1,10 +1,19 @@
-# CadGenerator Crew
+# CadGenerator
 
-Welcome to the CadGenerator Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+A powerful CAD generation system built with crewAI that leverages AI agents to create and manipulate 3D models. This project combines the capabilities of OpenSCAD, PyVista, and PyQt6 to provide a comprehensive CAD generation and visualization solution.
+
+## Features
+
+- AI-powered CAD model generation using crewAI agents
+- 3D model visualization with PyVista
+- Interactive GUI using PyQt6
+- OpenSCAD script generation and STL output
+- Knowledge base for CAD design patterns
+- Training and replay capabilities for model generation
 
 ## Installation
 
-Ensure you have Python >=3.10 <3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+Ensure you have Python >=3.10 <3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling.
 
 First, if you haven't already, install uv:
 
@@ -14,41 +23,63 @@ pip install uv
 
 Next, navigate to your project directory and install the dependencies:
 
-(Optional) Lock the dependencies and install them by using the CLI command:
 ```bash
-crewai install
+uv pip install -e .
 ```
-### Customizing
+
+### Environment Setup
 
 **Add your `OPENAI_API_KEY` into the `.env` file**
 
-- Modify `src/cad_generator/config/agents.yaml` to define your agents
-- Modify `src/cad_generator/config/tasks.yaml` to define your tasks
-- Modify `src/cad_generator/crew.py` to add your own logic, tools and specific args
-- Modify `src/cad_generator/main.py` to add custom inputs for your agents and tasks
+## Usage
 
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+The project provides several command-line interfaces:
 
 ```bash
-$ crewai run
+# Run the main CAD generation crew
+cad_generator
+
+# Run the crew with specific configuration
+run_crew
+
+# Train the model with new data
+train
+
+# Replay previous generations
+replay
+
+# Run tests
+test
+
+# Launch the GUI interface
+gui
 ```
 
-This command initializes the cad_generator Crew, assembling the agents and assigning them tasks as defined in your configuration.
+## Project Structure
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+- `src/cad_generator/` - Main source code
+  - `config/` - Configuration files for agents and tasks
+  - `crew.py` - Crew setup and management
+  - `main.py` - Entry points for different commands
+- `knowledge/` - Knowledge base for CAD design patterns
+- `db/` - Database for storing generated models and configurations
+- `tests/` - Test suite
 
-## Understanding Your Crew
+## Dependencies
 
-The cad_generator Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+- crewAI[tools] >= 0.119.0
+- numpy >= 2.2.5
+- pyvista >= 0.45.2
+- pyvistaqt >= 0.9.0
+- PyQt6 >= 6.4.0
 
 ## Support
 
-For support, questions, or feedback regarding the CadGenerator Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+For support, questions, or feedback:
+- Visit the [crewAI documentation](https://docs.crewai.com)
+- Check the [crewAI GitHub repository](https://github.com/joaomdmoura/crewai)
+- [Join the crewAI Discord](https://discord.com/invite/X4JWnZnxPb)
 
-Let's create wonders together with the power and simplicity of crewAI.
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
